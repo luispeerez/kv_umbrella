@@ -19,7 +19,9 @@ defmodule KVServer.Mixfile do
   def application do
     [
       extra_applications: [:logger],
-      mod: {KVServer.Application, []}
+      env: [app_port: 8080],
+      mod: {KVServer.Application, []},
+
     ]
   end
 

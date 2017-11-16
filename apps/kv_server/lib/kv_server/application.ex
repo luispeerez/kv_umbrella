@@ -9,11 +9,12 @@ defmodule KVServer.Application do
     # List all child processes to be supervised
 
     #port = String.to_integer(System.get_env("PORT") || raise "missing $PORT env var")
-    port = 4040
+    #port = 4040
+    port = Application.fetch_env!(:kv_server, :app_port)
 
     children = [
       {Task.Supervisor, name: KVServer.TaskSupervisor},
-      Supervisor.child_spec({Task, fn -> KVServer.accept(4040) end},restart: :permanent)
+      Supervisor.child_spec({Task, fn -> KVServer.accept(port) end},restart: :permanent)
       #{Task, fn->KVServer.accept(port) end}
       # Starts a worker by calling: KVServer.Worker.start_link(arg)
       # {KVServer.Worker, arg},
