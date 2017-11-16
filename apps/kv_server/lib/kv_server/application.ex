@@ -12,7 +12,9 @@ defmodule KVServer.Application do
     port = 4040
 
     children = [
-      {Task, fn->KVServer.accept(port) end}
+      {Task.Supervisor, name: KVServer.TaskSupervisor},
+      Supervisor.child_spec({Task, fn -> KVServer.accept(4040) end},restart: :permanent)
+      #{Task, fn->KVServer.accept(port) end}
       # Starts a worker by calling: KVServer.Worker.start_link(arg)
       # {KVServer.Worker, arg},
     ]
